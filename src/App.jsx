@@ -8,9 +8,7 @@ import HomePage from './pages/HomePage';
 import NotFound from './pages/NotFound';
 
 
-
 function App() {
-
   const [countries, setCountries] = useState([]);
 
   return (
@@ -18,9 +16,14 @@ function App() {
       <Header />
       <Main>
         <Routes>
-          <Route path='/' element={<HomePage countries={countries} setCountries = {setCountries}/>}/>
-          <Route path='/country/:name' element={<Details/>}/>
-          <Route path='*' element={<NotFound/>}/>
+          <Route
+            path='/'
+            element={
+              <HomePage countries={countries} setCountries={setCountries} />
+            }
+          />
+          <Route path='/country/:name' element={<Details />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Main>
     </>

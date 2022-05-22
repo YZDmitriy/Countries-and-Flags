@@ -40,3 +40,13 @@ body {
   font-weight: var(--fw-light);
   background-color: var(--colors-bg);
 }
+
+/* body { */
+  /* https://images.pexels.com/photos/87651/earth-blue-planet-globe-planet-87651.jpeg?cs=srgb&dl=pexels-pixabay-87651.jpg&fm=jpg */
+  /* background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/The_Earth_seen_from_Apollo_17_with_white_background.jpg/2058px-The_Earth_seen_from_Apollo_17_with_white_background.jpg');
+  background-size:100%;
+  background-repeat:no-repeat;
+  height: 100%;
+  width: 100%;
+  background-attachment: fixed; */
+/* } */

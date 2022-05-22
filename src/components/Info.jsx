@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { filterByCode } from '../config';
 
 const Wrapper = styled.section`
   margin-top: 3rem;
@@ -95,64 +99,73 @@ export const Info = (props) => {
     borders = [],
   } = props;
 
+  const navigate = useNavigate();
 
+  const [neighbors, setNeighbors] = useState([]);
 
+  useEffect(() => {
+    if (borders.length)
+      axios
+        .get(filterByCode(borders))
+        .then(({ data }) => setNeighbors(data.map((c) => c.name)));
+  }, [borders]);
 
-return (
-  <Wrapper>
-    <InfoImage src={flag} alt={name} />
-    <div>
-      <InfoTitle>{name}</InfoTitle>
-      <ListGroup>
-        <List>
-          <ListItem>
-            <b>Native Name: </b> {nativeName}
-          </ListItem>
-          <ListItem>
-            <b>Population: </b> {population}
-          </ListItem>
-          <ListItem>
-            <b>Region:</b> {region}
-          </ListItem>
-          <ListItem>
-            <b>Sub Region:</b> {subregion}
-          </ListItem>
-          <ListItem>
-            <b>Capital:</b> {capital}
-          </ListItem>
-        </List>
-        <List>
-          <ListItem>
-            <b>Top Level Domain: </b>{' '}
-            {topLevelDomain.map((d) => (
-              <span key={d}>{d}</span>
-            ))}
-          </ListItem>
-          <ListItem>
-            <b>Currency: </b>{' '}
-            {currencies.map((c) => (
-              <span key={c.code}>{c.name} </span>
-            ))}
-          </ListItem>
-          <ListItem>
-            <b>Languages: </b>{' '}
-            {languages.map((l) => (
-              <span key={l.name}>{l.name} </span>
-            ))}
-          </ListItem>
-        </List>
-      </ListGroup>
-      <Meta>
-      <b>Border Countries: </b>
-      {!borders.length ? (
-        <span>There is no border countries</span>
-        ) : (
-          <TagGroup>
-            {borders.map((b) => (<Tag key={b}>{b}</Tag>))}
-          </TagGroup>
-        )
-      }
-      </Meta>
+  return (
+    <Wrapper>
+      <InfoImage src={flag} alt={name} />
+      <div>
+        <InfoTitle>{name}</InfoTitle>
+        <ListGroup>
+          <List>
+            <ListItem>
+              <b>Native Name: </b> {nativeName}
+            </ListItem>
+            <ListItem>
+              <b>Population: </b> {population}
+            </ListItem>
+            <ListItem>
+              <b>Region:</b> {region}
+            </ListItem>
+            <ListItem>
+              <b>Sub Region:</b> {subregion}
+            </ListItem>
+            <ListItem>
+              <b>Capital:</b> {capital}
+            </ListItem>
+          </List>
+          <List>
+            <ListItem>
+              <b>Top Level Domain: </b>{' '}
+              {topLevelDomain.map((d) => (
+                <span key={d}>{d}</span>
+              ))}
+            </ListItem>
+            <ListItem>
+              <b>Currency: </b>{' '}
+              {currencies.map((c) => (
+                <span key={c.code}>{c.name} </span>
+              ))}
+            </ListItem>
+            <ListItem>
+              <b>Languages: </b>{' '}
+              {languages.map((l) => (
+                <span key={l.name}>{l.name} </span>
+              ))}
+            </ListItem>
+          </List>
+        </ListGroup>
+        <Meta>
+          <b>Border Countries: </b>
+          {!borders.length ? (
+            <span>There is no border countries</span>
+          ) : (
+            <TagGroup>
+              {neighbors.map((b) => (
+                <Tag key={b} onClick={() => navigate(`/country/${b}`)}>{b}</Tag>
+              ))}
+            </TagGroup>
+          )}
+        </Meta>
       </div>
     </Wrapper>
   );
