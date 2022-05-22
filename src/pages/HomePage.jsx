@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -8,20 +9,42 @@ import Controls from '../components/Controls';
 import List from '../components/List';
 import Card from '../components/Card';
 
-function HomePage(props) {
-  const [countries, setCountries] = useState([]);
+function HomePage({ countries, setCountries }) {
+  const [filtredCountries, setFilteredCountries] = useState(countries);
   const navigate = useNavigate();
 
-  console.log(countries);
+  const handleSearch = (search, region) => {
+    let data = [...countries];
+
+    if (region) {
+      data = data.filter((c) => c.region.includes(region));
+    }
+
+    if (search) {
+      data = data.filter((c) =>
+        c.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    setFilteredCountries(data);
+  };
+
+  // console.log(countries);
   useEffect(() => {
-    axios.get(ALL_COUNTRIES).then(({ data }) => setCountries(data));
+    if (!countries.length)
+      axios.get(ALL_COUNTRIES).then(({ data }) => setCountries(data));
   }, []);
+
+  useEffect(() => {
+    handleSearch();
+    // eslint-disable-next-line
+  }, [countries]);
 
   return (
     <>
-      <Controls />
+      <Controls onSearch={handleSearch}/>
       <List>
-        {countries.map((c) => {
+        {filtredCountries.map((c) => {
           const countryInfo = {
             img: c.flags.png,
             name: c.name,

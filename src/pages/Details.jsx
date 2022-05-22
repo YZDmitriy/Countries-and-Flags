@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Details(props) {
+function Details({match}) {
   return (
     <div>
-      Details
+      werty
     </div>
   );
 }

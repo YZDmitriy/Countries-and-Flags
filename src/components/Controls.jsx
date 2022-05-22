@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CustomSelect } from './CustomSelect';
 import Search from './Search';
 import styled from 'styled-components';
@@ -24,16 +24,23 @@ align-item: flex-start;
 `
 
 
-function Controls(props) {
+function Controls ({ onSearch }) {
   const [search, setSearch] = useState('');
-  const [region, setRegion] = useState('')
+  const [region, setRegion] = useState('');
+
+  useEffect(() => {
+    const regionValue = region?.value || '';
+    onSearch(search, regionValue);
+
+    // eslint-disable-next-line
+  }, [search, region]);
 
   return (
     <Wrapper>
       <Search search={search} setSearch={setSearch} />
       <CustomSelect
         options={options}
-        placeholder='Filter by Region'
+        placeholder="Filter by Region"
         isClearable
         isSearchable={false}
         value={region}
