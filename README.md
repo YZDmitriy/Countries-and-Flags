@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Сайт для поиска стран и их флагов!
+# Вы сможете найти подробную информацию о стране, а имеено численность населения,
+# используемая в стане валюта с какими странами граничит та или иная страна и много другое!
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
